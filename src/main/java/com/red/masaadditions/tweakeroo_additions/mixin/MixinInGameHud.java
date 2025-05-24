@@ -20,8 +20,8 @@ public class MixinInGameHud {
         }
     }
 
-    @ModifyConstant(method = "renderScoreboardSidebar", constant = @Constant(intValue = 15))
-    private int scoreboardSidebarMaxLength(int val) {
+    @ModifyConstant(method = "renderScoreboardSidebar", constant = @Constant(longValue = 15))
+    private long scoreboardSidebarMaxLength(long val) {
         return ConfigsExtended.Generic.SCOREBOARD_SIDEBAR_MAX_LENGTH.getIntegerValue();
     }
 }
