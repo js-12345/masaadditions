@@ -7,18 +7,16 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
-import net.minecraft.client.network.SequencedPacketCreator;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.NameTagItem;
-import net.minecraft.item.SwordItem;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -33,7 +31,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.stream.StreamSupport;
+import java.util.stream.Stream;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public abstract class MixinClientPlayerInteractionManager {
@@ -58,7 +56,7 @@ public abstract class MixinClientPlayerInteractionManager {
     @Inject(method = "attackEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;attack(Lnet/minecraft/entity/Entity;)V"))
     private void onAttackEntity1(PlayerEntity player, Entity target, CallbackInfo ci) {
         if (FeatureToggleExtended.TWEAK_ONE_HIT_KILL.getBooleanValue() && player.isCreative() && target instanceof LivingEntity && ((LivingEntity) target).getHealth() > 0f) {
-            ((ClientPlayerEntity) player).networkHandler.sendCommand(String.format("kill %s", target.getUuidAsString()));
+            ((ClientPlayerEntity) player).networkHandler.sendChatCommand(String.format("kill %s", target.getUuidAsString()));
         }
     }
 
@@ -77,7 +75,7 @@ public abstract class MixinClientPlayerInteractionManager {
                 return;
             }
 
-            if (piglinEntity.isBaby() || piglinEntity.getCustomName() != null || StreamSupport.stream(piglinEntity.getHandItems().spliterator(), false).noneMatch(itemStack -> itemStack.getItem() instanceof SwordItem)) {
+            if (piglinEntity.isBaby() || piglinEntity.getCustomName() != null || Stream.of(piglinEntity.getMainHandStack(), piglinEntity.getOffHandStack()).noneMatch(itemStack -> itemStack.isIn(ItemTags.SWORDS))) {
                 cir.setReturnValue(ActionResult.PASS);
             }
         }

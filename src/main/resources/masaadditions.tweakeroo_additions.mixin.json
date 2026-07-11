@@ -21,8 +21,6 @@
     "MixinClientPlayNetworkHandler",
     "MixinClientWorld",
     "MixinClientWorldAccessor",
-    "MixinDimensionEffects",
-    "MixinEquipment",
     "MixinAbstractHorseEntity",
     "MixinInGameHud",
     "MixinItemFrameEntityRenderer",
@@ -39,6 +37,7 @@
     "MixinRecipeBookWidget",
     "MixinSlimeBlock",
     "MixinStuckArrowsFeatureRenderer",
+    "ScreenAccessor",
     "MixinTitleScreen",
     "MixinWorldAccess"
   ],

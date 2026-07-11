@@ -24,7 +24,7 @@ public class PlacementTweaks {
 
     public static boolean onProcessLeftClickBlock(BlockPos pos) {
         PlayerEntity player = MinecraftClient.getInstance().player;
-        return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && player != null && !player.isCreative() && player.getEntityWorld().getBlockState(pos).getBlock() instanceof DragonEggBlock;
+        return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && player != null && !player.isCreative() && player.getWorld().getBlockState(pos).getBlock() instanceof DragonEggBlock;
     }
 
     public static boolean isPositionDisallowedByPerimeterOutlineList(BlockPos pos) {
@@ -52,7 +52,7 @@ public class PlacementTweaks {
     private static Block getBlockFromName(String name) {
         try {
             Identifier identifier = Identifier.of(name);
-            return Registries.BLOCK.getOrEmpty(identifier).orElse(null);
+            return Registries.BLOCK.getOptionalValue(identifier).orElse(null);
         } catch (Exception e) {
             return null;
         }

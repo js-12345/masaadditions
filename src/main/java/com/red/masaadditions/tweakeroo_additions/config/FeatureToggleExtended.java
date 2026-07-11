@@ -19,7 +19,6 @@ import fi.dy.masa.malilib.util.StringUtils;
 public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable<IConfigBoolean> {
     TWEAK_ALWAYS_RENDER_BARRIER_PARTICLES("tweakAlwaysRenderBarrierParticles", false, ""),
     TWEAK_BLOCK_BREAKING_PARTICLES("tweakBlockBreakingParticleTweaks", false, ""),
-    TWEAK_FORCE_SWAP_GEAR("tweakForceSwapGear", false, ""),
     TWEAK_INSANE_BLOCK_BREAKING_PARTICLES("tweakInsaneBlockBreakingParticles", false, ""),
     TWEAK_ITEM_NAME_COPY("tweakItemNameCopy", false, ""),
     TWEAK_LLAMA_STEERING("tweakLlamaSteering", false, ""),

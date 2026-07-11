@@ -14,7 +14,6 @@ public class ConfigsExtended {
         public static final ConfigDouble BLOCK_BREAKING_PARTICLE_SCALE = new ConfigDouble("blockBreakingParticleScale", 1, 0, 20).apply(GENERIC_KEY);
         public static final ConfigDouble BLOCK_BREAKING_PARTICLE_SPEED = new ConfigDouble("blockBreakingParticleSpeedMultiplier", 1, 0, 20).apply(GENERIC_KEY);
         public static final ConfigBoolean CLICK_RECIPE_CRAFT = new ConfigBoolean("clickRecipeCraft", false).apply(GENERIC_KEY);
-        public static final ConfigDouble CLOUD_HEIGHT = new ConfigDouble("cloudHeight", 128, 0, 256).apply(GENERIC_KEY);
         public static final ConfigBoolean DERPY_CHICKEN = new ConfigBoolean("derpyChicken", false).apply(GENERIC_KEY);
         public static final ConfigBoolean HAND_RESTOCK_CONTINUOUS = new ConfigBoolean("handRestockContinuous", false).apply(GENERIC_KEY);
         public static final ConfigBoolean GRID_RESTRICT_X = new ConfigBoolean("gridRestrictX", true).apply(GENERIC_KEY);
@@ -29,7 +28,6 @@ public class ConfigsExtended {
                 BLOCK_BREAKING_PARTICLE_SCALE,
                 BLOCK_BREAKING_PARTICLE_SPEED,
                 CLICK_RECIPE_CRAFT,
-                CLOUD_HEIGHT,
                 DERPY_CHICKEN,
                 HAND_RESTOCK_CONTINUOUS,
                 GRID_RESTRICT_X,

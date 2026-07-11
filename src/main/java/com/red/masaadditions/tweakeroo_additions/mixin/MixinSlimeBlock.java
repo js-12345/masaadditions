@@ -28,10 +28,10 @@ public class MixinSlimeBlock extends TranslucentBlock {
         }
     }
 
-    @Inject(method = "onLandedUpon", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z"), cancellable = true)
-    private void handleFallDamage(World world, BlockState state, BlockPos pos, Entity entity, float distance, CallbackInfo ci) {
+    @Inject(method = "onLandedUpon", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;handleFallDamage(DFLnet/minecraft/entity/damage/DamageSource;)Z"), cancellable = true)
+    private void handleFallDamage(World world, BlockState state, BlockPos pos, Entity entity, double fallDistance, CallbackInfo ci) {
         if (ConfigsExtended.Disable.DISABLE_SLIME_BLOCK_BOUNCING.getBooleanValue() && entity instanceof PlayerEntity) {
-            super.onLandedUpon(world, state, pos, entity, distance);
+            super.onLandedUpon(world, state, pos, entity, fallDistance);
             ci.cancel();
         }
     }

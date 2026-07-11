@@ -27,7 +27,7 @@ public class InventoryTweaks {
             if (id == null) {
                 continue;
             }
-            Registries.ITEM.getOrEmpty(id).ifPresent(set::add);
+            Registries.ITEM.getOptionalValue(id).ifPresent(set::add);
         }
     }
 

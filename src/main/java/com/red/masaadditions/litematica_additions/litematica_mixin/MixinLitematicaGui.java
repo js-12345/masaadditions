@@ -20,7 +20,7 @@ public class MixinLitematicaGui extends Screen {
     }
 
     @Override
-    public void filesDragged(List<Path> paths) {
+    public void onFilesDropped(List<Path> paths) {
         paths.stream().filter(_path -> _path.toString().endsWith(FILE_EXTENSION)).findFirst().ifPresent(FileImportUtil::saveDraggedLitematic);
     }
 }

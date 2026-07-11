@@ -1,21 +1,38 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mixin(TitleScreen.class)
-public class MixinTitleScreen extends Screen {
-    protected MixinTitleScreen(Text title) {
-        super(title);
-    }
+public abstract class MixinTitleScreen {
 
-    @ModifyVariable(method = "initWidgetsNormal", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/TitleScreen;addDrawableChild(Lnet/minecraft/client/gui/Element;)Lnet/minecraft/client/gui/Element;", ordinal = 2), ordinal = 0)
-    private boolean disableRealmsButton(boolean bl) {
-        return !ConfigsExtended.Disable.DISABLE_REALMS_BUTTON.getBooleanValue() && bl;
+    @Inject(method = "init", at = @At("TAIL"))
+    private void disableRealmsButton(CallbackInfo ci) {
+        if (!ConfigsExtended.Disable.DISABLE_REALMS_BUTTON.getBooleanValue()) {
+            return;
+        }
+
+        TitleScreen screen = (TitleScreen)(Object)this;
+
+        List<ClickableWidget> toRemove = new ArrayList<>();
+
+        for (var child : screen.children()) {
+            if (child instanceof ClickableWidget widget &&
+                    widget.getMessage().equals(Text.translatable("menu.online"))) {
+                toRemove.add(widget);
+            }
+        }
+
+        ScreenAccessor accessor = (ScreenAccessor) screen;
+        toRemove.forEach(accessor::masaadditions$remove);
     }
 }
