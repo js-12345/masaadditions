@@ -3,6 +3,7 @@ package com.red.masaadditions.tweakeroo_additions.util;
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import com.red.masaadditions.tweakeroo_additions.config.HotkeysExtended;
 import com.red.masaadditions.tweakeroo_additions.mixin.MixinAbstractBlockAccessor;
+import fi.dy.masa.litematica.util.RayTraceUtils;
 import fi.dy.masa.malilib.config.IConfigBoolean;
 import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import fi.dy.masa.malilib.hotkeys.IHotkeyCallback;
@@ -12,7 +13,6 @@ import fi.dy.masa.malilib.hotkeys.KeyCallbackToggleBooleanConfigWithMessage;
 import fi.dy.masa.malilib.interfaces.IValueChangeCallback;
 import fi.dy.masa.malilib.util.InfoUtils;
 import fi.dy.masa.malilib.util.StringUtils;
-import fi.dy.masa.tweakeroo.util.RayTraceUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
@@ -50,7 +50,7 @@ public class Callbacks {
                         pos = adjustPositionToSideOfEntity(pos, this.mc.player, ((BlockHitResult) trace).getSide());
                     }
 
-                    this.mc.player.networkHandler.sendCommand(String.format("tp @p %.6f %.6f %.6f", pos.x, maintainY ? this.mc.player.getY() : pos.y, pos.z));
+                    this.mc.player.networkHandler.sendChatCommand(String.format("tp @p %.6f %.6f %.6f", pos.x, maintainY ? this.mc.player.getY() : pos.y, pos.z));
                 }
             }
         }

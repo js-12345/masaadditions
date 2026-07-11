@@ -1,7 +1,7 @@
 package com.red.masaadditions.tweakeroo_additions.tweakeroo_mixin;
 
 import fi.dy.masa.tweakeroo.config.FeatureToggle;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
@@ -18,7 +18,7 @@ public class MixinExplosionCarpet {
                     target = "Lnet/minecraft/world/explosion/Explosion;getAffectedBlocks()Ljava/util/List;", ordinal = 1, remap = true)),
             at = @At(value = "FIELD",
                     target = "Lnet/minecraft/particle/ParticleTypes;EXPLOSION_EMITTER:Lnet/minecraft/particle/DefaultParticleType;", remap = true))
-    private static DefaultParticleType redirectSpawnParticles() {
+    private static ParticleType redirectSpawnParticles() {
         if (FeatureToggle.TWEAK_EXPLOSION_REDUCED_PARTICLES.getBooleanValue()) {
             return ParticleTypes.EXPLOSION;
         }

@@ -11,7 +11,6 @@ public class ConfigsExtended {
         public static final ConfigDouble BLOCK_BREAKING_PARTICLE_SCALE = new ConfigDouble("blockBreakingParticleScale", 1, 0, 20, "This is just an extra option for some fun looking\nblock breaking particles. Works if you have the\n'Block Breaking Particle Tweaks' tweak enabled.\nPorted from 1.12 Tweakeroo.");
         public static final ConfigDouble BLOCK_BREAKING_PARTICLE_SPEED = new ConfigDouble("blockBreakingParticleSpeedMultiplier", 1, 0, 20, "This is just an extra option for some fun looking\nblock breaking particles. Works if you have the\n'Block Breaking Particle Tweaks' tweak enabled.\nPorted from 1.12 Tweakeroo.");
         public static final ConfigBoolean CLICK_RECIPE_CRAFT = new ConfigBoolean("clickRecipeCraft", false, "Craft a recipe by clicking on it in the recipe book\nwhile holding CTRL and SHIFT modifier keys.\nHold ALT modifier key to throw crafted items.\nThis feature is originally from UsefulMod by nessie.");
-        public static final ConfigDouble CLOUD_HEIGHT = new ConfigDouble("cloudHeight", 128, 0, 256, "This controls the height of clouds in the Overworld dimension.");
         public static final ConfigBoolean DERPY_CHICKEN = new ConfigBoolean("derpyChicken", false, "Makes chickens always face upwards.\nThis feature is originally from CutelessMod by nessie.");
         public static final ConfigBoolean HAND_RESTOCK_CONTINUOUS = new ConfigBoolean("handRestockContinuous", false, "If enabled, then hand restocking is attempted every tick,\nwhereas normally it only happens before and after\nleft/right clicks or in the fast block placement mode.\nPorted from 1.12 Tweakeroo.\n§6It is recommended to have this disabled, §6unless you\nknow you will need it for some specific use case.");
         public static final ConfigBoolean GRID_RESTRICT_X = new ConfigBoolean("gridRestrictX", true, "If enabled, then grid restriction will work along the X axis.");
@@ -26,7 +25,6 @@ public class ConfigsExtended {
                 BLOCK_BREAKING_PARTICLE_SCALE,
                 BLOCK_BREAKING_PARTICLE_SPEED,
                 CLICK_RECIPE_CRAFT,
-                CLOUD_HEIGHT,
                 DERPY_CHICKEN,
                 HAND_RESTOCK_CONTINUOUS,
                 GRID_RESTRICT_X,
@@ -67,7 +65,6 @@ public class ConfigsExtended {
         public static final ConfigBooleanHotkeyed DISABLE_OTHER_PLAYER_RENDERING = new ConfigBooleanHotkeyed("disableOtherPlayerRendering", false, "", "Disables rendering of other players.");
         public static final ConfigBooleanHotkeyed DISABLE_PATH_MAKING = new ConfigBooleanHotkeyed("disablePathMaking", false, "", "Disables making path blocks with a shovel.");
         public static final ConfigBooleanHotkeyed DISABLE_PLANT_BLOCK_MODEL_OFFSET = new ConfigBooleanHotkeyed("disablePlantBlockModelOffset", false, "", "Disables the random XZ offsetting of plant block models.\nThis feature is originally from UsefulMod by nessie.");
-        public static final ConfigBooleanHotkeyed DISABLE_REALMS_BUTTON = new ConfigBooleanHotkeyed("disableRealmsButton", false, "", "Disables the 'Minecraft Realms' button on the title screen.\nThis feature is originally from UsefulMod by nessie.");
         public static final ConfigBooleanHotkeyed DISABLE_SCOREBOARD_SIDEBAR_RENDERING = new ConfigBooleanHotkeyed("disableScoreboardSidebarRendering", false, "", "Disables rendering of scoreboard sidebar.");
         public static final ConfigBooleanHotkeyed DISABLE_SLEEPING_NOTIFICATION = new ConfigBooleanHotkeyed("disableSleepingNotification", false, "", "Prevents the sleeping status from being displayed in the action bar.");
         public static final ConfigBooleanHotkeyed DISABLE_SLIME_BLOCK_BOUNCING = new ConfigBooleanHotkeyed("disableSlimeBlockBouncing", false, "", "Prevents player from bouncing on slime blocks.");
@@ -91,7 +88,6 @@ public class ConfigsExtended {
                 DISABLE_OTHER_PLAYER_RENDERING,
                 DISABLE_PATH_MAKING,
                 DISABLE_PLANT_BLOCK_MODEL_OFFSET,
-                DISABLE_REALMS_BUTTON,
                 DISABLE_SCOREBOARD_SIDEBAR_RENDERING,
                 DISABLE_SLEEPING_NOTIFICATION,
                 DISABLE_SLIME_BLOCK_BOUNCING,

@@ -22,7 +22,7 @@ public abstract class MixinLlamaEntity extends AnimalEntity {
 
     @Inject(method = "getControllingPassenger()Lnet/minecraft/entity/LivingEntity;", at = @At("HEAD"), cancellable = true)
     private void allowLamaSteering(CallbackInfoReturnable<LivingEntity> cir) {
-        if (this.getType().equals(EntityType.LLAMA)  && FeatureToggleExtended.TWEAK_LLAMA_STEERING.getBooleanValue()) {
+        if (this.getType().equals(EntityType.LLAMA)  && FeatureToggleExtended.TWEAK_LLAMA_STEERING.getBooleanValue() && !this.getBodyArmor().isEmpty()) {
             Entity var2 = this.getFirstPassenger();
             if (var2 instanceof PlayerEntity) {
                 PlayerEntity playerEntity = (PlayerEntity)var2;

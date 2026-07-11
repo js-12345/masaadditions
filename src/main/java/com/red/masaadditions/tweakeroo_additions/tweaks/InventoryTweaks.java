@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 
 import java.util.List;
 import java.util.Set;
@@ -27,7 +28,8 @@ public class InventoryTweaks {
             if (id == null) {
                 continue;
             }
-            Registries.ITEM.getOrEmpty(id).ifPresent(set::add);
+            if (Registries.ITEM.containsId(id))
+                set.add(Registries.ITEM.get(id));
         }
     }
 

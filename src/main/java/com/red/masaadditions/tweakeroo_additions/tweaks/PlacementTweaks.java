@@ -11,6 +11,7 @@ import net.minecraft.block.DragonEggBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.PendingUpdateManager;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
@@ -34,7 +35,7 @@ public class PlacementTweaks {
 
     public static boolean onProcessLeftClickBlock(BlockPos pos) {
         PlayerEntity player = MinecraftClient.getInstance().player;
-        return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && player != null && !player.isCreative() && player.getEntityWorld().getBlockState(pos).getBlock() instanceof DragonEggBlock;
+        return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && player != null && !player.isCreative() && player.getWorld().getBlockState(pos).getBlock() instanceof DragonEggBlock;
     }
 
     public static boolean isPositionDisallowedByPerimeterOutlineList(BlockPos pos) {
@@ -61,8 +62,8 @@ public class PlacementTweaks {
     @Nullable
     private static Block getBlockFromName(String name) {
         try {
-            Identifier identifier = new Identifier(name);
-            return Registries.BLOCK.getOrEmpty(identifier).orElse(null);
+            Identifier identifier = Identifier.tryParse(name);
+            return Registries.BLOCK.getOptionalValue(identifier).orElse(null);
         } catch (Exception e) {
             return null;
         }
@@ -76,7 +77,7 @@ public class PlacementTweaks {
 
         List<String> commands = new ArrayList<>();
 
-        NbtCompound blockEntityNbt = BlockItem.getBlockEntityNbt(stack);
+        NbtCompound blockEntityNbt = stack.get(DataComponentTypes.BLOCK_ENTITY_DATA) != null ? stack.get(DataComponentTypes.BLOCK_ENTITY_DATA).copyNbt() : null;
         for (var entry : blockPosToPendingUpdate.long2ObjectEntrySet()) {
             int sequence = ((MixinPendingUpdateAccessor) entry.getValue()).getSequence();
             if (sequence != sequenceId) {

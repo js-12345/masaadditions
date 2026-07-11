@@ -6,12 +6,12 @@ import fi.dy.masa.malilib.gui.button.ButtonBase;
 import fi.dy.masa.malilib.gui.button.IButtonActionListener;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.PistonType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Util;
@@ -40,7 +40,9 @@ public class MiscUtils {
         } else if (stateSchematic.getFluidState().getFluid() == Fluids.WATER || stateSchematic.getFluidState().getFluid() == Fluids.FLOWING_WATER) {
             match = heldItem == Items.WATER_BUCKET;
         } else if (stateSchematic.getBlock() == Blocks.WATER_CAULDRON) {
-            match = heldItem == Items.POTION && PotionUtil.getPotion(heldItemStack) == Potions.WATER || (stateSchematic.get(LeveledCauldronBlock.LEVEL) == 3 && heldItem == Items.WATER_BUCKET);
+            PotionContentsComponent contents = heldItemStack.get(DataComponentTypes.POTION_CONTENTS);
+            boolean isWaterPotion = contents != null && contents.potion().isPresent() && contents.potion().get().value() == Potions.WATER.value();
+            match = heldItem == Items.POTION && isWaterPotion || (stateSchematic.get(LeveledCauldronBlock.LEVEL) == 3 && heldItem == Items.WATER_BUCKET);
         } else if (stateSchematic.getFluidState().getFluid() == Fluids.LAVA || stateSchematic.getFluidState().getFluid() == Fluids.FLOWING_LAVA || stateSchematic.getBlock() == Blocks.LAVA_CAULDRON) {
             match = heldItem == Items.LAVA_BUCKET;
         } else if (stateSchematic.getBlock() == Blocks.POWDER_SNOW || stateSchematic.getBlock() == Blocks.POWDER_SNOW_CAULDRON) {

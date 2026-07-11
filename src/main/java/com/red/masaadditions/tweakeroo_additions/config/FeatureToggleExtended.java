@@ -18,7 +18,6 @@ import fi.dy.masa.tweakeroo.Tweakeroo;
 public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable<IConfigBoolean> {
     TWEAK_ALWAYS_RENDER_BARRIER_PARTICLES("tweakAlwaysRenderBarrierParticles", false, "", "Barrier block particles will always be rendered regardless of\nthe player's current gamemode and held item if enabled."),
     TWEAK_BLOCK_BREAKING_PARTICLES("tweakBlockBreakingParticleTweaks", false, "", "Allows tweaking the block breaking particles, such as reducing the number\nof particles produced per block broken.\nSet the limit in Generic -> 'Block Breaking Particle Limit'.\nPorted from 1.12 Tweakeroo."),
-    TWEAK_FORCE_SWAP_GEAR("tweakForceSwapGear", false, "", "Allows the player to equip an armor piece in their main hand by\nright clicking while sneaking even if the player already has\narmor in the respective armor slot. This also works with elytras."),
     TWEAK_INSANE_BLOCK_BREAKING_PARTICLES("tweakInsaneBlockBreakingParticles", false, "", "Changes block breaking particles to have no gravity and increased velocity.\nThis feature is originally from UsefulMod by nessie."),
     TWEAK_ITEM_NAME_COPY("tweakItemNameCopy", false, "", "Sets item name in anvil to string stored in clipboard."),
     TWEAK_LLAMA_STEERING("tweakLlamaSteering", false, "", "Allows the player to control Llamas while riding them.\nPorted from 1.12 Tweakeroo."),
@@ -33,13 +32,14 @@ public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable
     TWEAK_RESPAWN_ON_DEATH("tweakRespawnOnDeath", false, "", "Enables automatic respawning on death.\nThis feature is originally from UsefulMod by nessie.");
 
     private final String name;
-    private final String comment;
-    private final String prettyName;
+    private String comment;
+    private String prettyName;
     private final IKeybind keybind;
     private final boolean defaultValueBoolean;
     private final boolean singlePlayer;
     private boolean valueBoolean;
     private IValueChangeCallback<IConfigBoolean> callback;
+    private String translatedName;
 
     FeatureToggleExtended(String name, boolean defaultValue, String defaultHotkey, String comment) {
         this(name, defaultValue, false, defaultHotkey, KeybindSettings.DEFAULT, comment);
@@ -74,6 +74,7 @@ public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable
         this.prettyName = prettyName;
         this.keybind = KeybindMulti.fromStorageString(defaultHotkey, settings);
         this.keybind.setCallback(new KeyCallbackToggleBooleanConfigWithMessage(this));
+        this.translatedName = prettyName;
     }
 
     @Override
@@ -140,6 +141,26 @@ public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable
     }
 
     @Override
+    public String getTranslatedName() {
+        return this.translatedName;
+    }
+
+    @Override
+    public void setPrettyName(String prettyName) {
+        this.prettyName = prettyName;
+    }
+
+    @Override
+    public void setTranslatedName(String translatedName) {
+        this.translatedName = translatedName;
+    }
+
+    @Override
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    @Override
     public IKeybind getKeybind() {
         return this.keybind;
     }
@@ -190,10 +211,10 @@ public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable
             if (element.isJsonPrimitive()) {
                 this.valueBoolean = element.getAsBoolean();
             } else {
-                Tweakeroo.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element);
+                Tweakeroo.LOGGER.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element);
             }
         } catch (Exception e) {
-            Tweakeroo.logger.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element, e);
+            Tweakeroo.LOGGER.warn("Failed to set config value for '{}' from the JSON element '{}'", this.getName(), element, e);
         }
     }
 }

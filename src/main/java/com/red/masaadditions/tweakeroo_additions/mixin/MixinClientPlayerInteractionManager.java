@@ -13,12 +13,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.NameTagItem;
-import net.minecraft.item.SwordItem;
-import net.minecraft.network.message.ArgumentSignatureDataMap;
-import net.minecraft.network.message.LastSeenMessagesCollector;
 import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.c2s.play.CommandExecutionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -33,9 +30,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.time.Instant;
 import java.util.List;
-import java.util.stream.StreamSupport;
+import java.util.stream.Stream;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public class MixinClientPlayerInteractionManager {
@@ -58,7 +54,7 @@ public class MixinClientPlayerInteractionManager {
     @Inject(method = "attackEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;attack(Lnet/minecraft/entity/Entity;)V"))
     private void onAttackEntity1(PlayerEntity player, Entity target, CallbackInfo ci) {
         if (FeatureToggleExtended.TWEAK_ONE_HIT_KILL.getBooleanValue() && player.isCreative() && target instanceof LivingEntity && ((LivingEntity) target).getHealth() > 0f) {
-            ((ClientPlayerEntity) player).networkHandler.sendCommand(String.format("kill %s", target.getUuidAsString()));
+            ((ClientPlayerEntity) player).networkHandler.sendChatCommand(String.format("kill %s", target.getUuidAsString()));
         }
     }
 
@@ -77,7 +73,7 @@ public class MixinClientPlayerInteractionManager {
                 return;
             }
 
-            if (piglinEntity.isBaby() || piglinEntity.getCustomName() != null || StreamSupport.stream(piglinEntity.getHandItems().spliterator(), false).noneMatch(itemStack -> itemStack.getItem() instanceof SwordItem)) {
+            if (piglinEntity.isBaby() || piglinEntity.getCustomName() != null || Stream.of(piglinEntity.getMainHandStack(), piglinEntity.getOffHandStack()).noneMatch(itemStack -> itemStack.isIn(ItemTags.SWORDS))) {
                 cir.setReturnValue(ActionResult.PASS);
             }
         }
@@ -93,16 +89,13 @@ public class MixinClientPlayerInteractionManager {
         if (PlacementTweaks.replacementModeUseStack != null) {
             if (!MinecraftClient.getInstance().isInSingleplayer()) {
                 List<String> commands = PlacementTweaks.getReplacementModeCommands(PlacementTweaks.replacementModeUseStack, sequence);
-                if (commands.isEmpty()) {
-                    // return some noop packet
-                    cir.setReturnValue(new PlayerMoveC2SPacket.OnGroundOnly(player.isOnGround()));
-                } else {
-                    for (int i = 0; i < commands.size() - 1; i++) {
-                        player.networkHandler.sendCommand(commands.get(i));
-                    }
-                    LastSeenMessagesCollector.LastSeenMessages lastSeenMessages = ((ClientPlayNetworkHandlerAccessor) player.networkHandler).getLastSeenMessagesCollector().collect();
-                    cir.setReturnValue(new CommandExecutionC2SPacket(commands.get(commands.size() - 1), Instant.now(), 0, ArgumentSignatureDataMap.EMPTY, lastSeenMessages.update()));
+
+                for (int i = 0; i < commands.size(); i++) {
+                    player.networkHandler.sendChatCommand(commands.get(i));
                 }
+
+                // return some noop packet
+                cir.setReturnValue(new PlayerMoveC2SPacket.OnGroundOnly(player.isOnGround(), player.horizontalCollision));
             }
             PlacementTweaks.replacementModeUseStack = null;
         }

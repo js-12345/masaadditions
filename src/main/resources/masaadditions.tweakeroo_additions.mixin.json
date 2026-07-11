@@ -9,7 +9,6 @@
     "MixinAbstractBlockAccessor",
     "MixinAbstractBlockState",
     "MixinAnvilScreen",
-    "MixinEquipment",
     "MixinBeaconBlockEntityRenderer",
     "MixinBlockColors",
     "MixinBlockDustParticle",
@@ -22,7 +21,6 @@
     "MixinClientPlayNetworkHandler",
     "MixinClientWorld",
     "MixinClientWorldAccessor",
-    "MixinDimensionEffects",
     "MixinHorseBaseEntity",
     "MixinInGameHud",
     "MixinItemFrameEntityRenderer",
@@ -31,7 +29,6 @@
     "MixinLlamaEntity",
     "MixinMessageHandler",
     "MixinMinecraftClient",
-    "MixinModelPredicateProviderRegistry",
     "MixinParticleManager",
     "MixinPendingUpdateAccessor",
     "MixinPendingUpdateManagerAccessor",
@@ -40,7 +37,6 @@
     "MixinRecipeBookWidget",
     "MixinSlimeBlock",
     "MixinStuckArrowsFeatureRenderer",
-    "MixinTitleScreen",
     "MixinWorldAccess"
   ],
   "injectors": {
