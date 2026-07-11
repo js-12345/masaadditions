@@ -14,5 +14,5 @@ import org.spongepowered.asm.mixin.Shadow;
 public class MixinDisableConfigs {
     @Final
     @Shadow
-    public static ImmutableList<IConfigBase> OPTIONS = new ImmutableList.Builder<IConfigBase>().addAll(Configs.Disable.OPTIONS).addAll(ConfigsExtended.Disable.ADDITIONAL_OPTIONS).build();
+    public static final ImmutableList<IConfigBase> OPTIONS = new ImmutableList.Builder<IConfigBase>().addAll(Configs.Disable.OPTIONS).addAll(ConfigsExtended.Disable.ADDITIONAL_OPTIONS).build();
 }

@@ -14,5 +14,5 @@ import org.spongepowered.asm.mixin.Shadow;
 public class MixinInternalConfigs {
     @Final
     @Shadow
-    public static ImmutableList<IConfigBase> OPTIONS = new ImmutableList.Builder<IConfigBase>().addAll(Configs.Internal.OPTIONS).addAll(ConfigsExtended.Internal.ADDITIONAL_OPTIONS).build();
+    public static final ImmutableList<IConfigBase> OPTIONS = new ImmutableList.Builder<IConfigBase>().addAll(Configs.Internal.OPTIONS).addAll(ConfigsExtended.Internal.ADDITIONAL_OPTIONS).build();
 }

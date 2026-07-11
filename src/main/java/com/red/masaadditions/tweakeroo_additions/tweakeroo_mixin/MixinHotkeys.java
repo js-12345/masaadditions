@@ -16,5 +16,5 @@ import java.util.List;
 public class MixinHotkeys {
     @Final
     @Shadow
-    public static List<ConfigHotkey> HOTKEY_LIST = new ImmutableList.Builder<ConfigHotkey>().addAll(Hotkeys.HOTKEY_LIST).addAll(HotkeysExtended.EXTENDED_HOTKEY_LIST).build();
+    public static final List<ConfigHotkey> HOTKEY_LIST = new ImmutableList.Builder<ConfigHotkey>().addAll(Hotkeys.HOTKEY_LIST).addAll(HotkeysExtended.EXTENDED_HOTKEY_LIST).build();
 }
