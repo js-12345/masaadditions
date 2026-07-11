@@ -28,7 +28,6 @@
     "MixinKeyBindingAccessor",
     "MixinMessageHandler",
     "MixinMinecraftClient",
-    "MixinModelPredicateProviderRegistry",
     "MixinParticleManager",
     "MixinPendingUpdateAccessor",
     "MixinPendingUpdateManagerAccessor",
